@@ -30,6 +30,10 @@ Auth: username+password → JWT bearer token → stateless REST. Role-based acce
 
 ## 2. Architecture
 
+![Architecture](docs/architecture.svg)
+
+> Detailed component view: [`docs/architecture.svg`](docs/architecture.svg) · Mermaid source: [`docs/architecture.md`](docs/architecture.md)
+
 ```
 ┌─────────────┐    REST + STOMP/WebSocket     ┌────────────────────────────────────┐
 │  Frontends  │ ─────────────────────────────▶│        Spring Boot service         │

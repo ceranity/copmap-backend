@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .title { font-size: 22px; font-weight: 700; fill: #1f2937; }
+    .sub { font-size: 13px; fill: #6b7280; }
+    .grp { font-size: 14px; font-weight: 700; fill: #374151; }
+    .box { font-size: 13px; fill: #111827; }
+    .small { font-size: 11px; fill: #4b5563; }
+    .arrow { stroke: #374151; stroke-width: 1.4; fill: none; marker-end: url(#arr); }
+    .arrow-d { stroke: #2563eb; stroke-width: 1.4; stroke-dasharray: 4 3; fill: none; marker-end: url(#arrBlue); }
+    .arrow-r { stroke: #b91c1c; stroke-width: 1.4; fill: none; marker-end: url(#arrRed); }
+    .clients { fill: #eef2ff; stroke: #6366f1; }
+    .api     { fill: #ecfeff; stroke: #0891b2; }
+    .svc     { fill: #f0fdf4; stroke: #16a34a; }
+    .infra   { fill: #fef3c7; stroke: #d97706; }
+    .data    { fill: #fce7f3; stroke: #be185d; }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#374151"/>
+    </marker>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <text x="24" y="34" class="title">CopMap Backend — Architecture</text>
+  <text x="24" y="54" class="sub">Spring Boot 3 · PostgreSQL · Redis · STOMP/WebSocket · JWT Auth</text>
+
+  <!-- Clients -->
+  <rect x="24" y="80" width="220" height="240" rx="10" class="clients" opacity="0.35"/>
+  <text x="34" y="100" class="grp">Clients</text>
+  <rect x="44" y="120" width="180" height="54" rx="6" class="clients"/>
+  <text x="134" y="145" class="box" text-anchor="middle">Planner Web UI</text>
+  <text x="134" y="161" class="small" text-anchor="middle">REST + STOMP live map</text>
+  <rect x="44" y="190" width="180" height="54" rx="6" class="clients"/>
+  <text x="134" y="215" class="box" text-anchor="middle">Officer Mobile App</text>
+  <text x="134" y="231" class="small" text-anchor="middle">REST · GPS pings</text>
+  <rect x="44" y="260" width="180" height="44" rx="6" class="clients"/>
+  <text x="134" y="286" class="box" text-anchor="middle">Supervisor Dashboard</text>
+
+  <!-- API layer -->
+  <rect x="296" y="80" width="260" height="520" rx="10" class="api" opacity="0.25"/>
+  <text x="306" y="100" class="grp">API layer (Controllers)</text>
+  <g>
+    <rect x="316" y="120" width="220" height="34" rx="6" class="api"/><text x="426" y="142" class="box" text-anchor="middle">AuthController · /auth</text>
+    <rect x="316" y="162" width="220" height="34" rx="6" class="api"/><text x="426" y="184" class="box" text-anchor="middle">PatrolController · /patrols</text>
+    <rect x="316" y="204" width="220" height="34" rx="6" class="api"/><text x="426" y="226" class="box" text-anchor="middle">BandobastController · /bandobast</text>
+    <rect x="316" y="246" width="220" height="34" rx="6" class="api"/><text x="426" y="268" class="box" text-anchor="middle">AssignmentController</text>
+    <rect x="316" y="288" width="220" height="34" rx="6" class="api"/><text x="426" y="310" class="box" text-anchor="middle">LocationController · /locations</text>
+    <rect x="316" y="330" width="220" height="34" rx="6" class="api"/><text x="426" y="352" class="box" text-anchor="middle">AlertController · /alerts</text>
+    <rect x="316" y="372" width="220" height="34" rx="6" class="api"/><text x="426" y="394" class="box" text-anchor="middle">UserController · /users</text>
+    <rect x="316" y="420" width="220" height="44" rx="6" class="api"/>
+    <text x="426" y="440" class="box" text-anchor="middle">WebSocket · /ws</text>
+    <text x="426" y="456" class="small" text-anchor="middle">STOMP topics: /topic/live · /topic/alerts</text>
+    <rect x="316" y="480" width="220" height="44" rx="6" class="api"/>
+    <text x="426" y="500" class="box" text-anchor="middle">JwtAuthFilter</text>
+    <text x="426" y="516" class="small" text-anchor="middle">Role-based: OFFICER · PLANNER · SUPERVISOR</text>
+    <rect x="316" y="540" width="220" height="44" rx="6" class="api"/>
+    <text x="426" y="560" class="box" text-anchor="middle">GlobalExceptionHandler</text>
+    <text x="426" y="576" class="small" text-anchor="middle">OpenAPI / Swagger</text>
+  </g>
+
+  <!-- Services -->
+  <rect x="608" y="80" width="280" height="520" rx="10" class="svc" opacity="0.25"/>
+  <text x="618" y="100" class="grp">Domain services</text>
+  <g>
+    <rect x="628" y="120" width="240" height="34" rx="6" class="svc"/><text x="748" y="142" class="box" text-anchor="middle">PatrolService</text>
+    <rect x="628" y="162" width="240" height="34" rx="6" class="svc"/><text x="748" y="184" class="box" text-anchor="middle">BandobastService</text>
+    <rect x="628" y="204" width="240" height="34" rx="6" class="svc"/><text x="748" y="226" class="box" text-anchor="middle">AssignmentService</text>
+    <rect x="628" y="246" width="240" height="34" rx="6" class="svc"/><text x="748" y="268" class="box" text-anchor="middle">LocationService</text>
+    <rect x="628" y="288" width="240" height="34" rx="6" class="svc"/><text x="748" y="310" class="box" text-anchor="middle">AlertService</text>
+    <rect x="628" y="330" width="240" height="34" rx="6" class="svc"/><text x="748" y="352" class="box" text-anchor="middle">UserService · AuditService</text>
+    <rect x="628" y="372" width="240" height="44" rx="6" class="svc"/>
+    <text x="748" y="392" class="box" text-anchor="middle">MonitoringScheduler</text>
+    <text x="748" y="408" class="small" text-anchor="middle">Geofence · missed-checkpoint · silence</text>
+    <rect x="628" y="430" width="240" height="34" rx="6" class="svc"/><text x="748" y="452" class="box" text-anchor="middle">PdfService (OpenPDF)</text>
+    <rect x="628" y="474" width="240" height="44" rx="6" class="svc"/>
+    <text x="748" y="494" class="box" text-anchor="middle">NotificationService</text>
+    <text x="748" y="510" class="small" text-anchor="middle">log · email · mock-whatsapp</text>
+    <rect x="628" y="532" width="240" height="44" rx="6" class="svc"/>
+    <text x="748" y="552" class="box" text-anchor="middle">RealtimeBridge</text>
+    <text x="748" y="568" class="small" text-anchor="middle">Redis pub/sub → STOMP fan-out</text>
+  </g>
+
+  <!-- Data -->
+  <rect x="940" y="80" width="240" height="520" rx="10" class="data" opacity="0.25"/>
+  <text x="950" y="100" class="grp">Data & infra</text>
+
+  <rect x="960" y="120" width="200" height="110" rx="10" class="data"/>
+  <text x="1060" y="148" class="box" text-anchor="middle" font-weight="700">PostgreSQL</text>
+  <text x="1060" y="168" class="small" text-anchor="middle">users · patrols · bandobast</text>
+  <text x="1060" y="184" class="small" text-anchor="middle">assignments · checkpoints</text>
+  <text x="1060" y="200" class="small" text-anchor="middle">location_pings · alerts</text>
+  <text x="1060" y="216" class="small" text-anchor="middle">audit_events · Flyway V1</text>
+
+  <rect x="960" y="250" width="200" height="120" rx="10" class="data"/>
+  <text x="1060" y="278" class="box" text-anchor="middle" font-weight="700">Redis</text>
+  <text x="1060" y="298" class="small" text-anchor="middle">copmap:live:{officer} (TTL)</text>
+  <text x="1060" y="314" class="small" text-anchor="middle">PUB/SUB: copmap.location</text>
+  <text x="1060" y="330" class="small" text-anchor="middle">PUB/SUB: copmap.alerts</text>
+  <text x="1060" y="350" class="small" text-anchor="middle">Fast live map · fan-out</text>
+
+  <rect x="960" y="390" width="200" height="90" rx="10" class="infra"/>
+  <text x="1060" y="418" class="box" text-anchor="middle" font-weight="700">Packaging</text>
+  <text x="1060" y="438" class="small" text-anchor="middle">Dockerfile (JDK 17)</text>
+  <text x="1060" y="454" class="small" text-anchor="middle">docker-compose: app + pg + redis</text>
+  <text x="1060" y="470" class="small" text-anchor="middle">Actuator /health · OpenAPI</text>
+
+  <rect x="960" y="500" width="200" height="80" rx="10" class="infra"/>
+  <text x="1060" y="528" class="box" text-anchor="middle" font-weight="700">Security</text>
+  <text x="1060" y="548" class="small" text-anchor="middle">JWT HS256 · BCrypt</text>
+  <text x="1060" y="564" class="small" text-anchor="middle">Per-endpoint role guards</text>
+
+  <!-- Arrows: clients → API -->
+  <path class="arrow" d="M224 147 L316 137"/>
+  <path class="arrow" d="M224 217 L316 180"/>
+  <path class="arrow" d="M224 282 L316 300"/>
+
+  <!-- API → Services -->
+  <path class="arrow" d="M536 137 L628 137"/>
+  <path class="arrow" d="M536 179 L628 179"/>
+  <path class="arrow" d="M536 221 L628 221"/>
+  <path class="arrow" d="M536 263 L628 263"/>
+  <path class="arrow" d="M536 305 L628 305"/>
+  <path class="arrow" d="M536 347 L628 347"/>
+
+  <!-- Services → Postgres -->
+  <path class="arrow" d="M868 140 C 910 140, 910 165, 960 165"/>
+  <path class="arrow" d="M868 180 C 910 180, 910 180, 960 180"/>
+  <path class="arrow" d="M868 220 C 910 220, 910 195, 960 195"/>
+  <path class="arrow" d="M868 305 C 910 305, 910 210, 960 210"/>
+
+  <!-- LocationService/AlertService ↔ Redis -->
+  <path class="arrow-d" d="M868 263 C 920 263, 920 290, 960 290"/>
+  <path class="arrow-d" d="M868 305 C 920 305, 920 315, 960 315"/>
+  <!-- Redis → RealtimeBridge → WS -->
+  <path class="arrow-d" d="M960 340 C 900 345, 890 555, 868 554"/>
+  <path class="arrow-d" d="M628 554 C 580 554, 560 452, 536 452"/>
+
+  <!-- Scheduler → AlertService -->
+  <path class="arrow-r" d="M748 372 C 748 335, 748 330, 748 322"/>
+
+  <!-- Legend -->
+  <g transform="translate(24, 560)">
+    <text x="0" y="0" class="grp">Legend</text>
+    <line class="arrow"   x1="0" y1="20" x2="50" y2="20"/><text x="58" y="24" class="small">synchronous call</text>
+    <line class="arrow-d" x1="160" y1="20" x2="210" y2="20"/><text x="218" y="24" class="small">Redis cache / pub-sub</text>
+    <line class="arrow-r" x1="0" y1="44" x2="50" y2="44"/><text x="58" y="48" class="small">scheduled / event-driven</text>
+  </g>
+</svg>

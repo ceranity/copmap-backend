@@ -2,7 +2,13 @@
 
 Authored by Krishnamurti.
 
-## Component diagram (Mermaid)
+## Component diagram
+
+![CopMap architecture](architecture.svg)
+
+Source: [`architecture.svg`](architecture.svg) — renders directly on GitHub.
+
+### Mermaid (same diagram, editable form)
 
 ```mermaid
 flowchart LR
