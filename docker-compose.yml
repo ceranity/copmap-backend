@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: copmap-postgres
+    environment:
+      POSTGRES_DB: copmap
+      POSTGRES_USER: copmap
+      POSTGRES_PASSWORD: copmap
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U copmap"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: copmap-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    container_name: copmap-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/copmap
+      SPRING_DATASOURCE_USERNAME: copmap
+      SPRING_DATASOURCE_PASSWORD: copmap
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      COPMAP_JWT_SECRET: "change-me-to-a-long-random-string-please-change-me-please"
+      COPMAP_JWT_EXPIRY_MINUTES: "240"
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
